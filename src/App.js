@@ -9,7 +9,9 @@ const cardImages = [
   { "src": "/img/ring-1.png", matched: false},
   { "src": "/img/scroll-1.png", matched: false},
   { "src": "/img/shield-1.png", matched: false},
-  { "src": "/img/sword-1.png", matched: false}
+  { "src": "/img/sword-1.png", matched: false},
+  { "src": "/img/emoji-icon.png", matched: false },
+  { "src": "/img/sadd.jpeg", matched: false }
 ];
 
 function App() {
@@ -18,10 +20,12 @@ function App() {
   const [ choiceOne, setChoiceOne ] = useState(null);
   const [ choiceTwo, setChoiceTwo ] = useState(null);
   const [ disabled, setDisabled ] = useState(false);
+  const [ cardsNumber, setCardsNumber ] = useState(8);
 
 
   const shuffleCards = () => {
-    const shuffeledCards = [...cardImages, ...cardImages]
+    const cardsArr = cardImages.slice(0, cardsNumber / 2);
+    const shuffeledCards = [...cardsArr, ...cardsArr]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
       setChoiceOne(null);
@@ -55,8 +59,6 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
-  console.log(cards);
-
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -68,10 +70,22 @@ function App() {
     shuffleCards();
   }, []);
 
+  const handleChange = (e) => {
+    setCardsNumber(e.target.value);
+  };
+
   return (
     <div className="App">
       <h1>Magic Match</h1>
       <button onClick={shuffleCards}>New Game</button>
+      <div className='cards-amount'>
+        <label for="cardsAmount">Cards Amount: </label>
+        <select name="cardsAmount" onChange={handleChange}>
+          <option value="8">8</option>
+          <option value="12">12</option>
+          <option value="16">16</option>
+        </select>
+      </div>
       <div className='card-grid'>
         { cards.map(card => (
             <SingleCard  
