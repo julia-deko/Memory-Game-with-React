@@ -27,3 +27,19 @@ button:hover {
 .cards-amount {
   padding: 20px 12px;
 }
+
+.hidden {
+  visibility: hidden;
+}
+
+.win {
+  padding: 20px 20px;
+  background:rgb(99, 8, 99);
+  border-radius: 4px;
+  border: 2px solid #fff;
+  position: absolute;
+  left: 32%;
+  top: 50%;
+  margin-top: -50px;
+  z-index: 1;
+}

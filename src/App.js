@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './App.css'
 import SingleCard from './components/SingleCard';
 
@@ -21,7 +21,7 @@ function App() {
   const [ choiceTwo, setChoiceTwo ] = useState(null);
   const [ disabled, setDisabled ] = useState(false);
   const [ cardsNumber, setCardsNumber ] = useState(8);
-
+ 
 
   const shuffleCards = () => {
     const cardsArr = cardImages.slice(0, cardsNumber / 2);
@@ -59,6 +59,8 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
+  const ended = useMemo(() => cards.every(card => card.matched), [cards]);
+
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -85,6 +87,12 @@ function App() {
           <option value="12">12</option>
           <option value="16">16</option>
         </select>
+      </div>
+      <div className={ended ? "" : "hidden"}> 
+        <div className='win'>
+          <h2>You win! You made {turns} turns!</h2>
+          <button onClick={shuffleCards}>Play Again</button>
+        </div>
       </div>
       <div className='card-grid'>
         { cards.map(card => (
